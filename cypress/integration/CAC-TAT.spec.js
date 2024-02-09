@@ -138,4 +138,13 @@ describe("Customer Support Center TAT", () => {
         expect(input[0].files[0].name).to.equal("example.json");
       });
   });
+
+  it("verify that the privacy policy opens in another tab without the need for a click", () => {
+    cy.get("#privacy a").should("have.attr", "target", "_blank");
+  });
+
+  it("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
+    cy.get("#privacy a").invoke("removeAttr", "target").click();
+    cy.contains("CAC TAT - Política de privacidade").should("be.visible");
+  });
 });
