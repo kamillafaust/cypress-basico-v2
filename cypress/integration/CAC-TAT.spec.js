@@ -74,4 +74,17 @@ describe("Customer Support Center TAT", () => {
     cy.fillMandatoryFieldsAndSubmit();
     cy.get(".success").should("be.visible");
   });
+
+  it("selects a product (YouTube) by  its text", () => {
+    cy.get("#product").select("YouTube").should("have.value", "youtube");
+  });
+
+  it("selects a product (Mentoring) by  its value", () => {
+    const mentoring = "mentoria";
+    cy.get("#product").select(mentoring).should("have.value", mentoring);
+  });
+
+  it("selects a product (Blog) by  its index", () => {
+    cy.get("#product").select(1).should("have.value", "blog");
+  });
 });
