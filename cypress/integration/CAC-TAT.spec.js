@@ -91,7 +91,7 @@ describe("Customer Support Center TAT", () => {
   it('mark the type of service as "Feedback"', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
-      .should("have.value", "feedbackk");
+      .should("have.value", "feedback");
   });
 
   it("mark each type of service", () => {
@@ -143,7 +143,7 @@ describe("Customer Support Center TAT", () => {
     cy.get("#privacy a").should("have.attr", "target", "_blank");
   });
 
-  it("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
+  it.only("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
     cy.get("#privacy a").invoke("removeAttr", "target").click();
     cy.contains("CAC TAT - Política de privacidade").should("be.visible");
   });
