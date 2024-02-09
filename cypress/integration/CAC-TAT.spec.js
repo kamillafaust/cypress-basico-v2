@@ -111,4 +111,31 @@ describe("Customer Support Center TAT", () => {
       .uncheck()
       .should("not.be.checked");
   });
+
+  it("select a file from the fixtures folder", () => {
+    cy.get('input[type="file"]#file-upload')
+      .should("not.have.value")
+      .selectFile("./cypress/fixtures/example.json")
+      .should((input) => {
+        expect(input[0].files[0].name).to.equal("example.json");
+      });
+  });
+
+  it("selects a file simulating a drag-and-drop", () => {
+    cy.get('input[type="file"]')
+      .should("not.have.value")
+      .selectFile("./cypress/fixtures/example.json", { action: "drag-drop" })
+      .should((input) => {
+        expect(input[0].files[0].name).to.equal("example.json");
+      });
+  });
+
+  it("selects a file using a fixture for which an alias has been given", () => {
+    cy.fixture("example.json").as("exampleFile");
+    cy.get('input[type="file"]')
+      .selectFile("@exampleFile")
+      .should((input) => {
+        expect(input[0].files[0].name).to.equal("example.json");
+      });
+  });
 });
