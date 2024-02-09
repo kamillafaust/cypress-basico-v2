@@ -1,6 +1,7 @@
 ///<reference types="Cypress"/>:
 
 describe("Customer Support Center TAT", () => {
+  const THREE_SECONDS = 3000;
   beforeEach(() => {
     cy.visit("./src/index.html");
   });
@@ -9,30 +10,38 @@ describe("Customer Support Center TAT", () => {
   });
 
   it("fills in the mandatory fields and submits the form", () => {
-    const longText =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat purus nec nulla posuere, sit amet vestibulum velit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin tincidunt velit in arcu aliquam, ac dignissim ante cursus. Fusce hendrerit purus quis semper congue.";
+    const longText = Cypress._.repeat("abcdefghijklm", 14);
+    cy.clock();
     cy.get("#firstName").should("be.visible").type("Kamilla");
     cy.get("#lastName").type("Faust");
     cy.get("#email").type("kamillafaust@gmail.com");
     cy.get("#open-text-area").type(longText, { delay: 0 });
     cy.contains("button", "Enviar").click();
     cy.get(".success").should("be.visible");
+    cy.tick(THREE_SECONDS);
+    cy.get(".success").should("not.be.visible");
   });
 
   it("displays an error message when submitting the form with an invalidly formatted email", () => {
+    cy.clock();
     cy.get("#firstName").should("be.visible").type("Kamilla");
     cy.get("#lastName").type("Faust");
     cy.get("#email").type("kamillafaust@gmail");
     cy.get("#open-text-area").type("Teste");
     cy.contains("button", "Enviar").click();
     cy.get(".error").should("be.visible");
+    cy.tick(THREE_SECONDS);
+    cy.get(".error").should("not.be.visible");
   });
 
-  it("phone field remains empty when filled with non-numeric values", () => {
-    cy.get("#phone").type("abcdfeghijklm").should("have.text", "");
-  });
+  Cypress._.times(4, () => {
+    it("phone field remains empty when filled with non-numeric values", () => {
+      cy.get("#phone").type("abcdfeghijklm").should("have.text", "");
+    });
+  })
 
   it("displays an error message when the phone becomes mandatory but is not filled in before form submission", () => {
+    cy.clock();
     cy.get("#firstName").type("Kamilla");
     cy.get("#lastName").type("Faust");
     cy.get("#email").type("kamillafaust@gmail.com");
@@ -40,6 +49,8 @@ describe("Customer Support Center TAT", () => {
     cy.get("#open-text-area").type("New message");
     cy.contains("button", "Enviar").click();
     cy.get(".error").should("be.visible");
+    cy.tick(THREE_SECONDS);
+    cy.get(".error").should("not.be.visible");
   });
 
   it("fills and clears the fields name, last name, email, and phone", () => {
@@ -66,13 +77,19 @@ describe("Customer Support Center TAT", () => {
   });
 
   it("displays an error message when submitting the form without filling in the mandatory fields", () => {
+    cy.clock();
     cy.contains("button", "Enviar").click();
     cy.get(".error").should("be.visible");
+    cy.tick(THREE_SECONDS);
+    cy.get(".error").should("not.be.visible");
   });
 
   it("sends the form successfully using a custom command", () => {
+    cy.clock();
     cy.fillMandatoryFieldsAndSubmit();
     cy.get(".success").should("be.visible");
+    cy.tick(THREE_SECONDS);
+    cy.get(".success").should("not.be.visible");
   });
 
   it("selects a product (YouTube) by  its text", () => {
@@ -143,7 +160,7 @@ describe("Customer Support Center TAT", () => {
     cy.get("#privacy a").should("have.attr", "target", "_blank");
   });
 
-  it.only("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
+  it("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
     cy.get("#privacy a").invoke("removeAttr", "target").click();
     cy.contains("CAC TAT - Política de privacidade").should("be.visible");
   });
