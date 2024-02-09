@@ -1,49 +1,29 @@
-# Testes automatizados com Cypress - Básico
+# Automated Testing with Cypress - Basic
 
-Este é um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
+Sample project for the basic course the Talking About Testing online school ❤️
 
-Esse projeto tem como referência o curso básico de Automação de Testes ❤️
+## Pre-requirements
 
-## Conhecendo a aplicação em teste
+It is required to have Node.js and npm installed to run this project.
 
-A aplicação se chama Central de Atendimento ao Cliente TAT - CAC TAT - e foi desenvolvida usando HTML, CSS e JavaScript.
+> I used versions `v16.13.2`and `8.3.2` of Node.js and npm, respectively. I suggest you use the same or later versions.
 
-## Funcionalidades da aplicação
+## Installation
 
-A aplicação CAC TAT é um formulário para simular o envio de mensagens à uma central de atendimento ao cliente.
+Run `npm install` (or `npm i` for the short version) to install the dev dependencies.
 
-## Campos Obrigatórios
+## Tests
 
-Os seguintes campos são obrigatórios, por padrão:
+You can run the simulating a desktop or mobile viewport.
 
-- Nome (campo do tipo texto)
-- Sobrenome (campo do tipo texto)
-- Email (campo do tipo email, com validacão)
-- Como podemos te ajudar? (campo de área de texto)
+### Desktop
 
-## Outros campos
+Run `npm test` (or `npm t` for the short version) to run the test in headless mode on a desktop viewport.
 
-Além dos campos obrigatórios, o "cliente" pode informar:
+Or, run `npm run cy:open` to open Cypress in interactive mode on a desktop viewport.
 
-- Seu telefone (campo do tipo número)
-- O produto ao qual deseja atendimento (campo de seleção suspensa com as opções Blog, Cursos, Mentoria e YouTube)
-- O tipo de atendimento (campos do tipo radio com os valores Ajuda, Elogio e Feedback)
-- Meio de contato preferêncial (campos de checkbox com os valores Email e Telefone)
-- Um anexo (o "cliente" pode adicionar um arquivo como anexo ao atendimento)
+### Mobile
 
-## Regras dos meios de contato preferenciais
+Run `npm run test:mobile` to run the test in headless mode on a mobile viewport.
 
-- Quando o checkbox Telefone é marcado, o input do número do telefone passa a ser obrigatório
-- Ao desmarcar o checkbox Telefone, o input do número do telefone deixa de ser obrigatório
-
-## Política de privacidade
-
-- Ao clicar no link Política de privacidade, na parte inferior da página, tal página é aberta em uma nova aba do navegador
-
-## Mensagens
-
-⚠️ Caso haja algum problema relacionado aos campos obrigatórios, a seguinte mensagem é exibida (em um fundo amarelo): Valide os campos obrigatórios!.
-
-✅ Ao submeter o formulário com sucesso, a seguinte mensagem é exibida (em um fundo verde): Mensagem enviada com sucesso.
-- Além disso, quando o formulário é enviado com sucesso, todos os campos voltam ao seu estado padrão.
-
+Or, run `npm run cy:open:mobile` to open Cypress in interactive mode on a mobile viewport.
