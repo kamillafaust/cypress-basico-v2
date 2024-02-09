@@ -91,7 +91,7 @@ describe("Customer Support Center TAT", () => {
   it('mark the type of service as "Feedback"', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
-      .should("have.value", "feedback");
+      .should("have.value", "feedbackk");
   });
 
   it("mark each type of service", () => {
