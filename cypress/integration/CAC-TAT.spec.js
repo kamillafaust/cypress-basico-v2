@@ -87,4 +87,19 @@ describe("Customer Support Center TAT", () => {
   it("selects a product (Blog) by  its index", () => {
     cy.get("#product").select(1).should("have.value", "blog");
   });
+
+  it('mark the type of service as "Feedback"', () => {
+    cy.get('input[type="radio"][value="feedback"]')
+      .check()
+      .should("have.value", "feedback");
+  });
+
+  it.only("mark each type of service", () => {
+    cy.get('input[type="radio"]')
+      .should("have.length", 3)
+      .each(($radio) => {
+        cy.wrap($radio).check();
+        cy.wrap($radio).should("be.checked");
+      });
+  });
 });
