@@ -94,12 +94,21 @@ describe("Customer Support Center TAT", () => {
       .should("have.value", "feedback");
   });
 
-  it.only("mark each type of service", () => {
+  it("mark each type of service", () => {
     cy.get('input[type="radio"]')
       .should("have.length", 3)
       .each(($radio) => {
         cy.wrap($radio).check();
         cy.wrap($radio).should("be.checked");
       });
+  });
+
+  it("check all checkboxes and uncheck the last one", () => {
+    cy.get('input[type="checkbox"]')
+      .check()
+      .should("be.checked")
+      .last()
+      .uncheck()
+      .should("not.be.checked");
   });
 });
