@@ -38,7 +38,7 @@ describe("Customer Support Center TAT", () => {
     it("phone field remains empty when filled with non-numeric values", () => {
       cy.get("#phone").type("abcdfeghijklm").should("have.text", "");
     });
-  })
+  });
 
   it("displays an error message when the phone becomes mandatory but is not filled in before form submission", () => {
     cy.clock();
@@ -163,5 +163,31 @@ describe("Customer Support Center TAT", () => {
   it("access the privacy policy page by removing the target attribute and then clicking on the link", () => {
     cy.get("#privacy a").invoke("removeAttr", "target").click();
     cy.contains("CAC TAT - Política de privacidade").should("be.visible");
+  });
+
+  it("show and hide success and error messages using .invoke", () => {
+    cy.get(".success")
+      .should("not.be.visible")
+      .invoke("show")
+      .should("be.visible")
+      .and("contain", "Mensagem enviada com sucesso")
+      .invoke("hide")
+      .should("not.be.visible");
+
+    cy.get(".error")
+      .should("not.be.visible")
+      .invoke("show")
+      .should("be.visible")
+      .and("contain", "Valide os campos obrigatórios!")
+      .invoke("hide")
+      .should("not.be.visible");
+  });
+
+  it.only("Filling the text area using .invoke", () => {
+    const longText = Cypress._.repeat("123456", 14);
+
+    cy.get("#open-text-area")
+      .invoke("val", longText)
+      .should("have.value", longText);
   });
 });
