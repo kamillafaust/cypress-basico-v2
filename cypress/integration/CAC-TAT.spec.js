@@ -183,11 +183,28 @@ describe("Customer Support Center TAT", () => {
       .should("not.be.visible");
   });
 
-  it.only("Filling the text area using .invoke", () => {
+  it("Filling the text area using .invoke", () => {
     const longText = Cypress._.repeat("123456", 14);
 
     cy.get("#open-text-area")
       .invoke("val", longText)
       .should("have.value", longText);
+  });
+
+  it("make an HTTP request", () => {
+    cy.request(
+      "https://cac-tat.s3.eu-central-1.amazonaws.com/index.html"
+    ).should((response) => {
+      const { status, statusText, body } = response;
+      expect(status).to.equal(200);
+      expect(statusText).to.equal("OK");
+      expect(body).to.include("CAC TAT");
+    });
+  });
+
+  it.only("finding the hidden cat", () => {
+    cy.get("#cat").invoke("show").should("be.visible");
+    cy.get("#title").invoke("text", "CAT TAT");
+    cy.get("#subtitle").invoke("text", "The cat was found");
   });
 });
